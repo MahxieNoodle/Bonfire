@@ -108,7 +108,7 @@ class Images:
 
         EXAMPLE: !horse
         RESULT: A beautiful horse."""
-        result = await utils.request('https://hrsendl.com/', attr='json')
+        result = await utils.request('https://hrsendl.com/', attr='text')
         try:
             soup = bs(result, 'html.parser')
             filename = soup.img.get('src')
