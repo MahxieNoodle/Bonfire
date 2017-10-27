@@ -108,7 +108,7 @@ class Images:
 
         EXAMPLE: !horse
         RESULT: A beautiful horse."""
-        result = await utils.request('https://hrsendl.com/horse', attr='json')
+        result = await utils.request('https://hrsendl.com/', attr='json')
         try:
             soup = bs(result, 'html.parser')
             filename = soup.img.get('src')
@@ -116,7 +116,7 @@ class Images:
             await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
             return
 
-        image = await utils.download_image("http://random.dog/{}".format(filename))
+        image = await utils.download_image("{}".format(filename))
         f = discord.File(image, filename=filename)
         await ctx.send(file=f)
 
