@@ -100,6 +100,27 @@ class Images:
         else:
             await ctx.send(url)
 
+    @commands.command(aliases=['horse', 'hrs'])
+    @utils.custom_perms(send_messages=True)
+    @utils.check_restricted()
+    async def horse(self, ctx):
+        """Use this to print a random horse image. Neigh.
+
+        EXAMPLE: !horse
+        RESULT: A beautiful horse."""
+        result = await utils.request('https://hrsendl.com/horse', attr='json')
+        try:
+            soup = bs(result, 'html.parser')
+            filename = soup.img.get('src')
+        except (TypeError, AttributeError):
+            await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
+            return
+
+        image = await utils.download_image("http://random.dog/{}".format(filename))
+        f = discord.File(image, filename=filename)
+        await ctx.send(file=f)
+
+
     @commands.command()
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
@@ -123,7 +144,7 @@ class Images:
             # If the channel is not nsfw, we don't need to do anything, as the default filter blocks explicit
             if nsfw:
                 params['q'] += ", (explicit OR suggestive)"
-                params['filter_id'] = 95938
+                params['filter_id'] = 131862
             else:
                 params['q'] += ", safe"
             # Lets filter out some of the "crap" that's on derpibooru by requiring an image with a score higher than 15
