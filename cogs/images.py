@@ -100,7 +100,7 @@ class Images:
         else:
             await ctx.send(url)
 
-    @commands.command(aliases=['horse', 'hrs'])
+    @commands.command()
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
     async def horse(self, ctx):
