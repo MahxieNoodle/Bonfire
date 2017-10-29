@@ -105,7 +105,7 @@ class Images:
     @commands.command()
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
-    async def hresp(self, ctx):
+    async def horse(self, ctx):
         """Use this to print a random horse image. Neigh.
 
         EXAMPLE: !horse
