@@ -120,6 +120,27 @@ class Images:
         f = discord.File(image, filename=filename)
         await ctx.send(file=f)
 
+        #Testing for horse APU
+        @commands.command()
+        @utils.custom_perms(send_messages=True)
+        @utils.check_restricted()
+        async def horsetest(self, ctx):
+            """Use this to print a random horse image. Neigh.
+
+            EXAMPLE: !horse
+            RESULT: A beautiful horse."""
+            result = await utils.request('https://hrsendl.com/', attr='json')
+            try:
+                image_link = 'https:{}'.format(result['image'])
+            except (TypeError, AttributeError):
+                await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
+                return
+
+            image = await utils.download_image("{}".format(image_link))
+            f = discord.File(image, filename=filename)
+            await ctx.send(file=f)
+
+
 
     @commands.command()
     @utils.custom_perms(send_messages=True)
