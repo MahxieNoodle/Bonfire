@@ -129,7 +129,7 @@ class Images:
 
         EXAMPLE: !hresp
         RESULT: A beautiful horse."""
-        result = await utils.request('https://hrsendl.com/', attr='json')
+        result = await utils.request('https://hrsendl.com/horse', attr='json')
         try:
             image_link = 'https:{}'.format(result['image'])
         except (TypeError, AttributeError):
