@@ -110,15 +110,16 @@ class Images:
 
         EXAMPLE: !horse
         RESULT: A beautiful horse."""
-        result = await utils.request('https://hrsendl.com/horse', attr='json')
+
         try:
-            result.get()
+            result = await utils.request('https://hrsendl.com/horse', attr='json')
+            horse_image = result['image']
         except (TypeError, AttributeError):
             await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
             return
 
-        image = await utils.download_image("{}".format(result['image']))
-        f = discord.File(image, filename=result['image'])
+        image = await utils.download_image("{}".format(horse_image))
+        f = discord.File(image, filename=horse_image)
         await ctx.send(file=f)
 
 
