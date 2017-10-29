@@ -136,9 +136,9 @@ class Images:
                 await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
                 return
 
-            image = await utils.download_image("{}".format(image_link))
-            f = discord.File(image, filename=filename)
-            await ctx.send("image_link")
+            #image = await utils.download_image("{}".format(image_link))
+            #f = discord.File(image, filename=filename)
+            await ctx.send(result)
 
 
 
