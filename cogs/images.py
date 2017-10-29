@@ -100,25 +100,6 @@ class Images:
         else:
             await ctx.send(url)
 
-    @commands.command()
-    @utils.custom_perms(send_messages=True)
-    @utils.check_restricted()
-    async def horse(self, ctx):
-        """Use this to print a random horse image. Neigh.
-
-        EXAMPLE: !horse
-        RESULT: A beautiful horse."""
-        result = await utils.request('https://hrsendl.com/', attr='text')
-        try:
-            soup = bs(result, 'html.parser')
-            filename = soup.img.get('src')
-        except (TypeError, AttributeError):
-            await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
-            return
-
-        image = await utils.download_image("{}".format(filename))
-        f = discord.File(image, filename=filename)
-        await ctx.send(file=f)
 
     #Testing for horse APU
     @commands.command()
@@ -127,13 +108,13 @@ class Images:
     async def hresp(self, ctx):
         """Use this to print a random horse image. Neigh.
 
-        EXAMPLE: !hresp
+        EXAMPLE: !horse
         RESULT: A beautiful horse."""
         result = await utils.request('https://hrsendl.com/horse', attr='json')
         try:
-            image_link = 'https:{}'.format(result['image'])
+            result.get()
         except (TypeError, AttributeError):
-            await ctx.send(result)
+            await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
             return
 
         image = await utils.download_image("{}".format(result['image']))
