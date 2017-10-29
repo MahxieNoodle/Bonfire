@@ -136,9 +136,9 @@ class Images:
             await ctx.send(result)
             return
 
-        #image = await utils.download_image("{}".format(image_link))
-        #f = discord.File(image, filename=filename)
-        await ctx.send(result['image'])
+        image = await utils.download_image("{}".format(result['image']))
+        f = discord.File(image, filename=result['image'])
+        await ctx.send(file=f)
 
 
 
