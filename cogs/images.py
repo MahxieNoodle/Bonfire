@@ -147,7 +147,7 @@ class Images:
             # If the channel is not nsfw, we don't need to do anything, as the default filter blocks explicit
             if nsfw:
                 params['q'] += ", (explicit OR suggestive)"
-                params['filter_id'] = 131862
+                params['filter_id'] = 95938
             else:
                 params['q'] += ", safe"
             # Lets filter out some of the "crap" that's on derpibooru by requiring an image with a score higher than 15
