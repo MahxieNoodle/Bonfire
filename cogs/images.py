@@ -210,7 +210,7 @@ class Images:
 
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
-        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat']
+        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 320,
@@ -241,7 +241,7 @@ class Images:
                 rand_image_tags = data[rand_image_number]['tags']
                 if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     await ctx.send(rand_image)
-                    await ctx.send(rand_image_tags)
+                   # await ctx.send(rand_image_tags)
                     break
                 else:
                     if retry < 3:
