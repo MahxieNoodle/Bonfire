@@ -242,6 +242,8 @@ class Images:
 
             if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                  await ctx.send(rand_image)
+            else:
+                await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
 
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
