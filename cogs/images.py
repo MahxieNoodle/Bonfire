@@ -244,10 +244,10 @@ class Images:
                             retry += 1
                         else:
                             await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
-                            break
+                        break
                 else:
                     await ctx.send(rand_image)
-                    break
+                break
 
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
