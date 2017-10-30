@@ -245,7 +245,7 @@ class Images:
                 else:
                     await ctx.send("on blacklist")
                     if retry < 3:
-                        retry += 5
+                        retry += 1
                     else:
                         await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
                         break
