@@ -236,12 +236,11 @@ class Images:
 
 
         try:
-            rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
-            rand_image = data[rand_image_number]['file_url']
-            rand_image_tags = data[rand_image_number]['tags']
-
             retry = 0
             while (retry < 3):
+                rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
+                rand_image = data[rand_image_number]['file_url']
+                rand_image_tags = data[rand_image_number]['tags']
                 if  [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     if retry < 3:
                         retry = retry + 1
