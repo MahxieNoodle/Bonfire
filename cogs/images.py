@@ -235,7 +235,7 @@ class Images:
 
         try:
             retry = 0
-            while (retry < 4):
+            while (retry < 3):
                 rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_tags = data[rand_image_number]['tags']
@@ -243,11 +243,10 @@ class Images:
                     await ctx.send(rand_image)
                     break
                 else:
-                    await ctx.send("on blacklist")
                     if retry < 3:
                         retry += 1
                     else:
-                        await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
+                        await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
                         break
 
 
