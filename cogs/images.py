@@ -210,6 +210,7 @@ class Images:
 
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
+        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 320,
@@ -231,12 +232,21 @@ class Images:
         # A number between (0,-1) and receive an error.
         # The response should be in a list format, so we'll end up getting a key error if the response was in json
         # i.e. it responded with a 404/504/etc.
+
+
+
         try:
-            rand_image = data[random.SystemRandom().randint(0, len(data) - 1)]['file_url']
-            await ctx.send(rand_image)
+            rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
+            rand_image = data[rand_image_number]['file_url']
+            rand_image_tags = data[rand_image_number]['tags']
+
+            if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
+                 await ctx.send(rand_image)
+
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
             return
+
 
 
 def setup(bot):
