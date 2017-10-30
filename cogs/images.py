@@ -241,6 +241,7 @@ class Images:
                 rand_image_tags = data[rand_image_number]['tags']
                 if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     await ctx.send(rand_image)
+                    await ctx.send(rand_image_tags)
                     break
                 else:
                     if retry < 3:
