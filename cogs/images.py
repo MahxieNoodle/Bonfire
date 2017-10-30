@@ -233,8 +233,6 @@ class Images:
         # The response should be in a list format, so we'll end up getting a key error if the response was in json
         # i.e. it responded with a 404/504/etc.
 
-
-
         try:
             retry = 0
             while (retry < 3):
@@ -248,6 +246,7 @@ class Images:
                         await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
                 else:
                     await ctx.send(rand_image)
+                    break
 
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
