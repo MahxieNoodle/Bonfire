@@ -240,14 +240,14 @@ class Images:
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_tags = data[rand_image_number]['tags']
                 if  [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
-                    if retry < 3:
-                        retry = retry + 1
-                    else:
-                        await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
-                        break
+                        if retry < 3:
+                            retry += 1
+                        else:
+                            await ctx.send("Sorry, there were no results with those tags or you used a blacklisted tag. {}".format(ctx.message.author.mention))
+                            retry = retry + 10
                 else:
                     await ctx.send(rand_image)
-                    break
+                break
 
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
