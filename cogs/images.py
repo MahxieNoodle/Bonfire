@@ -235,7 +235,7 @@ class Images:
 
         try:
             retry = 0
-            while (retry < 3):
+            while (retry < 4):
                 rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_tags = data[rand_image_number]['tags']
