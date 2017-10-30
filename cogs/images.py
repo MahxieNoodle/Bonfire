@@ -210,7 +210,7 @@ class Images:
 
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
-        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat']
+        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','pony']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 320,
