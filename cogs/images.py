@@ -101,8 +101,7 @@ class Images:
             await ctx.send(url)
 
 
-    #Testing for horse APU
-    @commands.command()
+    @commands.command(aliases=['neigh', 'horsi'])
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
     async def horse(self, ctx):
@@ -210,6 +209,7 @@ class Images:
 
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
+        #Blacklist of tags to block. Because e621 has the worst tagging system we need to supply the list locally.
         blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl']
 
         url = 'https://e621.net/post/index.json'
@@ -233,6 +233,7 @@ class Images:
         # The response should be in a list format, so we'll end up getting a key error if the response was in json
         # i.e. it responded with a 404/504/etc.
 
+        # Get get the tags from the image and compare them against the blacklist. If they match we will retry.
         try:
             retry = 0
             while (retry < 4):
@@ -241,7 +242,6 @@ class Images:
                 rand_image_tags = data[rand_image_number]['tags']
                 if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     await ctx.send(rand_image)
-                   # await ctx.send(rand_image_tags)
                     break
                 else:
                     if retry < 3:
@@ -249,10 +249,6 @@ class Images:
                     else:
                         await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
                         break
-
-
-
-
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
             return
