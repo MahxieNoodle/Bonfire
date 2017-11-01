@@ -11,6 +11,7 @@ loop = asyncio.get_event_loop()
 # The tables needed for the database, as well as their primary keys
 required_tables = {
     'battle_records': 'member_id',
+    'blacklists': 'member_id',
     'boops': 'member_id',
     'command_usage': 'command',
     'overwatch': 'member_id',
