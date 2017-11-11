@@ -28,6 +28,7 @@ class Blacklist:
             else:
                 await ctx.send("There are no tags setup on this server!")
 
+
             ##TODO finish later
 
 
