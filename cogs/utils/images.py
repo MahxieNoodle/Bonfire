@@ -64,7 +64,7 @@ async def create_banner(member, image_title, data):
     header_base_image.paste(header_top, (0, 0), header_top)
     header_base_image.paste(header_bot, (0, 0), header_bot)
     header_base_image.paste(header_top, (0, 0), header_top)
-    header_base_image.paste(avatar, (5, 8), avatar)
+    header_base_image.paste(avatar, (5, 7), avatar)
 
     # Place the username next to the avatar image
     h_b = Image.new('RGBA', (1050, 375)).convert("RGBA")
@@ -72,7 +72,7 @@ async def create_banner(member, image_title, data):
     font = ImageFont.truetype(whitneyMedium, 60)
     draw_username_text.text((300, 230), username, (255, 255, 255), font=font)
     username_text = h_b.resize((350, 125), Image.ANTIALIAS)
-    header_base_image.paste(username_text, (0, 6), username_text)
+    header_base_image.paste(username_text, (0, 20), username_text)
     header = header_base_image.convert("RGBA")
 
     # Place the title in the image
