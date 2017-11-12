@@ -47,7 +47,6 @@ async def create_banner(member, image_title, data):
     # This is the background to the avatar
     mask = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     user_avatar = Image.open(avatar)
-    user_avatar_outline = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     output = ImageOps.fit(user_avatar, mask.size, centering=(0.5, 0.5))
     output.putalpha(mask)
 
