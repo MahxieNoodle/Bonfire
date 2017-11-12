@@ -11,6 +11,7 @@ header_height = 125
 canvas_height = 145
 banner_background = "{}/headerImage.png".format(base_path)
 banner_bot = "{}/headerLower.png".format(base_path)
+user_image_outline = "{}/headerProfileImageOutline.png".format(base_path)
 
 
 def convert_to_file(img):
@@ -60,6 +61,8 @@ async def create_banner(member, image_title, data):
     header_top = Image.open(banner_background).convert("RGBA")
     header_bot = Image.open(banner_bot).convert("RGBA")
     header_base_image = Image.new("RGB", (350, header_height), "#000000")
+    user_image_outline_base = Image.open(user_image_outline).convert("RGBA")
+    header_base_image.paste(user_image_outline_base, (0, 0), user_image_outline_base)
     header_base_image.paste(header_top, (0, 0), header_top)
     header_base_image.paste(header_bot, (0, 0), header_bot)
     header_base_image.paste(header_top, (0, 0), header_top)
