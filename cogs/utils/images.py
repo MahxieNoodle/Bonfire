@@ -11,7 +11,6 @@ header_height = 125
 canvas_height = 145
 banner_background = "{}/headerImage.png".format(base_path)
 banner_bot = "{}/headerLower.png".format(base_path)
-user_image_outline = "{}/headerProfileImageOutline.png".format(base_path)
 
 
 def convert_to_file(img):
@@ -48,9 +47,6 @@ async def create_banner(member, image_title, data):
     # This is the background to the avatar
     mask = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     user_avatar = Image.open(avatar)
-    user_image_outline_base = Image.open(user_image_outline).convert("RGBA")
-    user_outline = user_image_outline_base.resize((100, 100))
-    user_avatar.paste(user_outline, (0, 0), user_outline)
     output = ImageOps.fit(user_avatar, mask.size, centering=(0.5, 0.5))
     output.putalpha(mask)
 
