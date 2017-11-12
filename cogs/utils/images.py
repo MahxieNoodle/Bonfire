@@ -61,11 +61,11 @@ async def create_banner(member, image_title, data):
     header_top = Image.open(banner_background).convert("RGBA")
     header_bot = Image.open(banner_bot).convert("RGBA")
     header_base_image = Image.new("RGB", (350, header_height), "#000000")
-    user_image_outline_base = Image.open(user_image_outline).convert("RGBA")
-    header_base_image.paste(user_image_outline_base, (0, 0), user_image_outline_base)
     header_base_image.paste(header_top, (0, 0), header_top)
     header_base_image.paste(header_bot, (0, 0), header_bot)
     header_base_image.paste(header_top, (0, 0), header_top)
+    user_image_outline_base = Image.open(user_image_outline).convert("RGBA")
+    header_base_image.paste(user_image_outline_base, (0, 0), user_image_outline_base)c
     header_base_image.paste(avatar, (0, 8), avatar)
 
     # Place the username next to the avatar image
