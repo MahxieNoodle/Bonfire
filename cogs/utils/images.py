@@ -9,8 +9,8 @@ whitneyMedium = "fonts/whitney-medium.ttf"
 whitneyBold = "fonts/whitney-bold.ttf"
 header_height = 125
 canvas_height = 145
-banner_background = "{}/bannerTop2.png".format(base_path)
-banner_bot = "{}/bannerBot.png".format(base_path)
+banner_background = "{}/headerImage.png".format(base_path)
+banner_bot = "{}/headerLower.png".format(base_path)
 
 
 def convert_to_file(img):
@@ -45,7 +45,7 @@ async def create_banner(member, image_title, data):
     base_height = canvas_height + (lines_of_text * 20)
 
     # This is the background to the avatar
-    mask = Image.open('{}/mask.png'.format(base_path)).convert('L')
+    mask = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     user_avatar = Image.open(avatar)
     output = ImageOps.fit(user_avatar, mask.size, centering=(0.5, 0.5))
     output.putalpha(mask)
