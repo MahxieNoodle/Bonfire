@@ -47,12 +47,12 @@ async def create_banner(member, image_title, data):
     # This is the background to the avatar
     mask = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     user_avatar = Image.open(avatar)
+    user_avatar_outline = Image.open('{}/headerProfileImageMask.png'.format(base_path)).convert('L')
     output = ImageOps.fit(user_avatar, mask.size, centering=(0.5, 0.5))
     output.putalpha(mask)
 
-
     # Here's our finalized avatar image that we'll use
-    avatar = output.resize((110, 110), Image.ANTIALIAS)
+    avatar = output.resize((100, 100), Image.ANTIALIAS)
 
     # Now lets piece together the full image we'll use
     base_image = Image.new("RGB", (350, base_height), "#000000")
@@ -64,7 +64,7 @@ async def create_banner(member, image_title, data):
     header_base_image.paste(header_top, (0, 0), header_top)
     header_base_image.paste(header_bot, (0, 0), header_bot)
     header_base_image.paste(header_top, (0, 0), header_top)
-    header_base_image.paste(avatar, (5, 7), avatar)
+    header_base_image.paste(avatar, (0, 8), avatar)
 
     # Place the username next to the avatar image
     h_b = Image.new('RGBA', (1050, 375)).convert("RGBA")
@@ -72,7 +72,7 @@ async def create_banner(member, image_title, data):
     font = ImageFont.truetype(whitneyMedium, 60)
     draw_username_text.text((300, 230), username, (255, 255, 255), font=font)
     username_text = h_b.resize((350, 125), Image.ANTIALIAS)
-    header_base_image.paste(username_text, (10, 0), username_text)
+    header_base_image.paste(username_text, (0, 0), username_text)
     header = header_base_image.convert("RGBA")
 
     # Place the title in the image
