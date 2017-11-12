@@ -52,7 +52,7 @@ async def create_banner(member, image_title, data):
 
 
     # Here's our finalized avatar image that we'll use
-    avatar = output.resize((120, 120), Image.ANTIALIAS)
+    avatar = output.resize((110, 110), Image.ANTIALIAS)
 
     # Now lets piece together the full image we'll use
     base_image = Image.new("RGB", (350, base_height), "#000000")
@@ -64,7 +64,7 @@ async def create_banner(member, image_title, data):
     header_base_image.paste(header_top, (0, 0), header_top)
     header_base_image.paste(header_bot, (0, 0), header_bot)
     header_base_image.paste(header_top, (0, 0), header_top)
-    header_base_image.paste(avatar, (0, 20), avatar)
+    header_base_image.paste(avatar, (0, 8), avatar)
 
     # Place the username next to the avatar image
     h_b = Image.new('RGBA', (1050, 375)).convert("RGBA")
