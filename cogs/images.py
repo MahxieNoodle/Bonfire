@@ -55,18 +55,25 @@ class Images:
         f = discord.File(image, filename=filename)
         await ctx.send(file=f)
 
-    @commands.command()
+    @commands.command(aliases=['snek'])
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
-    async def snek(self, ctx):
-        """Use this to print a random snek image.
+    async def snake(self, ctx):
+        """Use this to print a random snake image. SssSSsss.
 
-        EXAMPLE: !snek
-        RESULT: A beautiful picture of a snek o3o"""
-        # Find a random image based on how many we currently have
-        f = random.SystemRandom().choice(glob.glob('images/snek*'))
-        with open(f, 'rb') as f:
-            await ctx.send(file=discord.File(f))
+        EXAMPLE: !snake
+        RESULT: A cute noodle."""
+
+        try:
+            result = await utils.request('https://hrsendl.com/snake', attr='json')
+            snake_image = result['image']
+        except (TypeError, AttributeError):
+            await ctx.send("I couldn't connect! Sorry no sneks right now ;w;")
+            return
+
+        image = await utils.download_image("{}".format(snake_image))
+        f = discord.File(image, filename=snake_image)
+        await ctx.send(file=f)
 
     @commands.command()
     @commands.guild_only()
