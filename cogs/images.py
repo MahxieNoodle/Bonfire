@@ -55,24 +55,48 @@ class Images:
         f = discord.File(image, filename=filename)
         await ctx.send(file=f)
 
+
     @commands.command(aliases=['snek'])
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
     async def snake(self, ctx):
         """Use this to print a random snake image. SssSSsss.
-
-        EXAMPLE: !snake
-        RESULT: A cute noodle."""
-
-        try:
-            result = await utils.request('https://hrsendl.com/snake', attr='json')
-            snake_image = result['image']
-        except (TypeError, AttributeError):
-            await ctx.send("I couldn't connect! Sorry no sneks right now ;w;")
+        EXAMPLE: !snek
+        RESULT: A beautiful picture of a snek o3o"""
+        result = await utils.request("http://hrsendl.com/snake")
+        if result is None:
+            await ctx.send("I couldn't connect! Sorry no snakes right now ;w;")
+            return
+        filename = result.get('image', None)
+        if filename is None:
+            await ctx.send("I couldn't connect! Sorry no snakes right now ;w;")
             return
 
-        image = await utils.download_image("{}".format(snake_image))
-        f = discord.File(image, filename=snake_image)
+        image = await utils.download_image(filename)
+        filename = re.search('.*/snakes/(.*)', filename).group(1)
+        f = discord.File(image, filename=filename)
+        await ctx.send(file=f)
+
+    @commands.command()
+    @utils.custom_perms(send_messages=True)
+    @utils.check_restricted()
+    async def horse(self, ctx):
+        """Use this to print a random horse image.
+
+        EXAMPLE: !horse
+        RESULT: A beautiful picture of a horse o3o"""
+        result = await utils.request("http://hrsendl.com/horse")
+        if result is None:
+            await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
+            return
+        filename = result.get('image', None)
+        if filename is None:
+            await ctx.send("I couldn't connect! Sorry no horses right now ;w;")
+            return
+
+        image = await utils.download_image(filename)
+        filename = re.search('.*/horses/(.*)', filename).group(1)
+        f = discord.File(image, filename=filename)
         await ctx.send(file=f)
 
     @commands.command()
