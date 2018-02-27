@@ -287,6 +287,7 @@ class Images:
                         retry += 1
                     else:
                         await ctx.send("Sorry, no images aviable for that search. {}".format(ctx.message.author.mention))
+                        break
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
             return
