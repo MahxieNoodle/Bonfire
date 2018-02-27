@@ -253,8 +253,14 @@ class Images:
         # safe/explicit based on if this channel is nsfw or not
         params['tags'] += " rating:explicit" if nsfw else " rating:safe"
 
+        data = await utils.request(url, payload=params)
 
+        if data is None:
+            await ctx.send("Sorry, I had trouble connecting at the moment; please try again later")
+            return
 
+        # Try to find an image from the list. If there were no results, we're going to attempt to find
+        # A number between (0,-1) and receive an error.
         # The response should be in a list format, so we'll end up getting a key error if the response was in json
         # i.e. it responded with a 404/504/etc.
 
@@ -262,30 +268,18 @@ class Images:
         try:
             retry = 0
             while (retry < 4):
-                data = await utils.request(url, payload=params)
-
-                if data is None:
-                    await ctx.send("Sorry, I had trouble connecting at the moment; please try again later")
-                    return
                 rand_image_number = 1
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_ext = data[rand_image_number]['file_ext']
                 rand_image_tags = data[rand_image_number]['tags']
-                if rand_image_ext != 'swf':
-                    if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
-                        await ctx.send(rand_image)
-                        break
-                    else:
-                        if retry < 3:
-                            retry += 1
-                        else:
-                            await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
-                            break
+                if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
+                    await ctx.send(rand_image)
+                    break
                 else:
                     if retry < 3:
                         retry += 1
                     else:
-                        await ctx.send("Sorry, no images aviable for that search. {}".format(ctx.message.author.mention))
+                        await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
                         break
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
