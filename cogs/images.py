@@ -272,25 +272,15 @@ class Images:
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_ext = data[rand_image_number]['file_ext']
                 rand_image_tags = data[rand_image_number]['tags']
-                if rand_image_ext == 'swf':
+                if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
+                    await ctx.send(rand_image)
+                    break
+                else:
                     if retry < 3:
                         retry += 1
                     else:
-                        await ctx.send("Sorry, could not find a valid imagec. {}".format(
-                            ctx.message.author.mention))
-                else:
-
-                    if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
-                        await ctx.send(rand_image)
+                        await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
                         break
-                    else:
-                        if retry < 3:
-                            retry += 1
-                        else:
-                            await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
-                        break
-
-
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
             return
