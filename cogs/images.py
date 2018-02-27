@@ -268,10 +268,8 @@ class Images:
         try:
             retry = 0
             while (retry < 4):
-                #rand_image_number = random.SystemRandom().randint(0, len(data) - 1)
-                rand_image_number = 0
-                rand_image = data[rand_image_number]['file_url']
-                rand_image_tags = data[rand_image_number]['tags']
+                rand_image = data[0]['file_url']
+                rand_image_tags = data[0]['tags']
                 if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     await ctx.send(rand_image)
                     break
