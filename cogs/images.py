@@ -253,14 +253,8 @@ class Images:
         # safe/explicit based on if this channel is nsfw or not
         params['tags'] += " rating:explicit" if nsfw else " rating:safe"
 
-        data = await utils.request(url, payload=params)
 
-        if data is None:
-            await ctx.send("Sorry, I had trouble connecting at the moment; please try again later")
-            return
 
-        # Try to find an image from the list. If there were no results, we're going to attempt to find
-        # A number between (0,-1) and receive an error.
         # The response should be in a list format, so we'll end up getting a key error if the response was in json
         # i.e. it responded with a 404/504/etc.
 
@@ -268,6 +262,11 @@ class Images:
         try:
             retry = 0
             while (retry < 4):
+                data = await utils.request(url, payload=params)
+
+                if data is None:
+                    await ctx.send("Sorry, I had trouble connecting at the moment; please try again later")
+                    return
                 rand_image_number = 1
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_ext = data[rand_image_number]['file_ext']
