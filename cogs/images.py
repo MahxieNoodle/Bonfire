@@ -241,7 +241,7 @@ class Images:
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
         #Blacklist of tags to block. Because e621 has the worst tagging system we need to supply the list locally.
-        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl','hyper*']
+        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl','hyper','hyper_dick','hyper_boobs','hyper_breasts','watersports']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 5,
@@ -270,7 +270,6 @@ class Images:
             while (retry < 4):
                 rand_image_number = 1
                 rand_image = data[rand_image_number]['file_url']
-                rand_image_ext = data[rand_image_number]['file_ext']
                 rand_image_tags = data[rand_image_number]['tags']
                 if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
                     await ctx.send(rand_image)
