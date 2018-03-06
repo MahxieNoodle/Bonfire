@@ -26,7 +26,8 @@ class Filters:
             if tags:
                 entries = [t['trigger'] for t in blacklists]
                 pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
-                await pages.paginate()
+                ctx.send("There are no tags setup on this server!")
+                #await pages.paginate()
             else:
                 await ctx.send("There are no tags setup on this server!")
                 return
