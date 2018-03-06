@@ -6,7 +6,7 @@ from . import utils
 import asyncio
 
 
-class Blacklist:
+class Filters:
 
     def __init__(self, bot):
         self.bot = bot
@@ -20,7 +20,7 @@ class Blacklist:
 
             EXAMPLE: !blacklists
             RESULT: All blacklists for this server server"""
-            tags = self.bot.db.load('blacklists', key=server, pluck='blacklists')
+            tags = self.bot.db.load('filters', key=server, pluck='filters')
             if tags:
                 entries = [t['trigger'] for t in blacklists]
                 pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
@@ -32,5 +32,7 @@ class Blacklist:
             ##TODO finish later
 
 
+
+
 def setup(bot):
-    bot.add_cog(Blacklist(bot))
+    bot.add_cog(Filters(bot))
