@@ -73,6 +73,7 @@ extensions = [
     'cogs.music',
     'cogs.polls',
     'cogs.playlist',
+    'cogs.filters',
     'cogs.dj'
 ]
 

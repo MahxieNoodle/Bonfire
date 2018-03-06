@@ -20,7 +20,7 @@ class Blacklist:
 
             EXAMPLE: !blacklists
             RESULT: All blacklists for this server server"""
-            tags = self.bot.db.load('blacklists', key=ctx.message.guild.id, pluck='blacklists')
+            tags = self.bot.db.load('blacklists', key=server, pluck='blacklists')
             if tags:
                 entries = [t['trigger'] for t in blacklists]
                 pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
