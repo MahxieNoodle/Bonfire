@@ -11,10 +11,9 @@ class Filters:
 
     def __init__(self, bot):
         self.bot = bot
-        server = discord.guild.id
 
         @commands.command()
-        @commands.guild_only()
+        @commands.guild_only()oh
         @utils.custom_perms(send_messages=True)
         @utils.check_restricted()
         async def blacklists(self, ctx):
