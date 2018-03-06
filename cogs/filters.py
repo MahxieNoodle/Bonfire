@@ -11,18 +11,24 @@ class Filters:
     def __init__(self, bot):
         self.bot = bot
 
-        @commands.command(aliases=['blocklist'])
-        @utils.custom_perms(send_messages=True)
-        @utils.check_restricted()
-        async def blacklists(self, ctx):
-            """Prints all blacklists and their tags for e621 and derpi.
+    @commands.command(aliases=['blocklist'])
+    @commands.guild_only()
+    @utils.custom_perms(send_messages=True)
+    @utils.check_restricted()
+    async def blacklists(self, ctx, user = None):
+        """Makes me hug a person!
 
-            EXAMPLE: !blacklists
-            RESULT: All blacklists for this server server"""
-            #tags = self.bot.db.load('filters', key=str(ctx.guild.id), pluck='filters')
-            await ctx.send("There are no tags setup on this server!")
-
-
+        EXAMPLE: !hug @Someone
+        RESULT: I hug the shit out of that person"""
+        if user is None:
+            user = ctx.message.author
+        else:
+            converter = commands.converter.MemberConverter()
+            try:
+                user = await converter.convert(ctx, user)
+            except commands.converter.BadArgument:
+                await ctx.send("Error: Could not find user: {}".format(user))
+                return
 
 
 def setup(bot):
