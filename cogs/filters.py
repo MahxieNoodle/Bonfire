@@ -8,7 +8,6 @@ import discord
 import asyncio
 
 class Filters:
-
     def __init__(self, bot):
         self.bot = bot
 
@@ -21,11 +20,9 @@ class Filters:
 
             EXAMPLE: !blacklists
             RESULT: All blacklists for this server server"""
-            tags = self.bot.db.load('filters', key=str(ctx.guild.id), pluck='filters')
-            if tags:
-                entries = [t['trigger'] for t in blacklists]
-                ctx.send("There are no tags setup on this server!")
-                #await pages.paginate()
+            #tags = self.bot.db.load('filters', key=str(ctx.guild.id), pluck='filters')
+            if 1==1:
+                ctx.send("There are no tags setup on this server! :c")
             else:
                 await ctx.send("There are no tags setup on this server!")
                 return
