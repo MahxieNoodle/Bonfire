@@ -13,7 +13,7 @@ class Filters:
         self.bot = bot
 
         @commands.command()
-        @commands.guild_only()oh
+        @commands.guild_only()
         @utils.custom_perms(send_messages=True)
         @utils.check_restricted()
         async def blacklists(self, ctx):
@@ -24,7 +24,6 @@ class Filters:
             tags = self.bot.db.load('filters', key=str(ctx.guild.id), pluck='filters')
             if tags:
                 entries = [t['trigger'] for t in blacklists]
-                pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
                 ctx.send("There are no tags setup on this server!")
                 #await pages.paginate()
             else:
