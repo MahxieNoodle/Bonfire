@@ -16,19 +16,18 @@ class Filters:
         @commands.guild_only()
         @utils.custom_perms(send_messages=True)
         @utils.check_restricted()
-        async def blacklists(self, ctx):
-            """Prints all blacklists and their tags for e621 and derpi.
+        async def filters(self, ctx):
+            """Prints all the custom tags that this server currently has
 
-            EXAMPLE: !blacklists
-            RESULT: All blacklists for this server server"""
-            tags = self.bot.db.load('filters', key=ctx.guild.id, pluck='filters')
+            EXAMPLE: !tags
+            RESULT: All tags setup on this server"""
+            tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags')
             if tags:
-                entries = [t['trigger'] for t in blacklists]
+                entries = [t['trigger'] for t in tags]
                 pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
                 await pages.paginate()
             else:
                 await ctx.send("There are no tags setup on this server!")
-                return
 
 def setup(bot):
     bot.add_cog(Filters(bot))
