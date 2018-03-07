@@ -21,13 +21,13 @@ class Filters:
 
         EXAMPLE: !tags
         RESULT: All tags setup on this server"""
-        tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags')
+        tags = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
         if tags:
             entries = [t['trigger'] for t in tags]
             pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
             await pages.paginate()
         else:
-            await ctx.send("There are no tags setup on this server!")
+            await ctx.send("There are no filters setup on this server!")
 
     @commands.command()
     @commands.guild_only()
@@ -38,16 +38,16 @@ class Filters:
 
         EXAMPLE: !mytags
         RESULT: All your tags setup on this server"""
-        tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags')
+        tags = self.bot.db.load('filter', key=ctx.message.guild.id, pluck='filter')
         if tags:
             entries = [t['trigger'] for t in tags if t['author'] == str(ctx.message.author.id)]
             if len(entries) == 0:
-                await ctx.send("You have no tags setup on this server!")
+                await ctx.send("You have no filters setup on this server!")
             else:
                 pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
                 await pages.paginate()
         else:
-            await ctx.send("There are no tags setup on this server!")
+            await ctx.send("There are no filters setup on this server!")
 
     @commands.group(invoke_without_command=True)
     @commands.guild_only()
@@ -60,15 +60,15 @@ class Filters:
         EXAMPLE: !tag butts
         RESULT: Whatever you setup for the butts tag!!"""
         tag = tag.lower().strip()
-        tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags')
+        tags = self.bot.db.load('filter', key=ctx.message.guild.id, pluck='filter')
         if tags:
             for t in tags:
                 if t['trigger'].lower().strip() == tag:
                     await ctx.send("\u200B{}".format(t['result']))
                     return
-            await ctx.send("There is no tag called {}".format(tag))
+            await ctx.send("There is no filter called {}".format(tag))
         else:
-            await ctx.send("There are no tags setup on this server!")
+            await ctx.send("There are no filters setup on this server!")
 
     @filter.command(name='add', aliases=['create', 'setup'])
     @commands.guild_only()
@@ -83,7 +83,7 @@ class Filters:
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        my_msg = await ctx.send("Ready to setup a new tag! What do you want the trigger for the tag to be?")
+        my_msg = await ctx.send("Ready to setup a new filter! What do you want the trigger for the filter to be?")
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=60)
