@@ -63,7 +63,7 @@ class Filters:
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
         if filters:
             for t in filters:
-                if t['filter'].lower().strip() == filter:
+                if t['filters'].lower().strip() == filter:
                     await ctx.send("\u200B{}".format(t['result']))
                     return
             await ctx.send("There is no filter called {}".format(filter))
@@ -148,7 +148,7 @@ class Filters:
             'filters': filters
         }
         self.bot.db.save('tags', entry)
-        await ctx.send("I have just setup a new filter for this server! You can view your filter with {}".format(filter))
+        await ctx.send("I have just setup a new filter for this server! You can view your filter with !filter {}".format(filter))
 
     @filter.command(name='edit')
     @commands.guild_only()
