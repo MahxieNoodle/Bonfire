@@ -89,7 +89,7 @@ class Filters:
             return
         else:
             # Get the three arguments from this list, then make sure the 2nd is either from or to
-            if len(options) > 2:
+            if len(options) < 2:
                 arg3 = 0
                 return
             else:
