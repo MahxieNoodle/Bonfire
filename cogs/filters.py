@@ -7,7 +7,7 @@ import asyncio
 
 
 class Filters:
-    """This class contains all the commands for custom tags"""
+    """This class contains all the commands for custom filtes/blacklists"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -17,13 +17,13 @@ class Filters:
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
     async def filters(self, ctx):
-        """Prints all the custom tags that this server currently has
+        """Prints all the custom filters that this server currently has
 
-        EXAMPLE: !tags
-        RESULT: All tags setup on this server"""
-        tags = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
-        if tags:
-            entries = [t['trigger'] for t in tags]
+        EXAMPLE: !filters
+        RESULT: All filters setup on this server"""
+        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
+        if filters:
+            entries = [t['filter'] for t in filters]
             pages = utils.Pages(self.bot, message=ctx.message, entries=entries)
             await pages.paginate()
         else:
@@ -36,11 +36,11 @@ class Filters:
     async def myfilters(self, ctx):
         """Prints all the custom tags that this server that you own
 
-        EXAMPLE: !mytags
+        EXAMPLE: !myfilters
         RESULT: All your tags setup on this server"""
-        tags = self.bot.db.load('filter', key=ctx.message.guild.id, pluck='filter')
-        if tags:
-            entries = [t['trigger'] for t in tags if t['author'] == str(ctx.message.author.id)]
+        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
+        if filters:
+            entries = [t['filter'] for t in filters if t['author'] == str(ctx.message.author.id)]
             if len(entries) == 0:
                 await ctx.send("You have no filters setup on this server!")
             else:
@@ -53,20 +53,20 @@ class Filters:
     @commands.guild_only()
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
-    async def filter(self, ctx, *, tag: str):
-        """This can be used to call custom tags
-        The format to call a custom tag is !tag <tag>
+    async def filter(self, ctx, *, filter: str):
+        """This can be used to call custom filters
+        The format to call a custom tag is !filters <name>
 
-        EXAMPLE: !tag butts
-        RESULT: Whatever you setup for the butts tag!!"""
-        tag = tag.lower().strip()
-        tags = self.bot.db.load('filter', key=ctx.message.guild.id, pluck='filter')
-        if tags:
-            for t in tags:
-                if t['trigger'].lower().strip() == tag:
+        EXAMPLE: !filter e621
+        RESULT: Whatever you setup for the e621 filter!!"""
+        filter = filter.lower().strip()
+        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
+        if filters:
+            for t in filters:
+                if t['filter'].lower().strip() == filter:
                     await ctx.send("\u200B{}".format(t['result']))
                     return
-            await ctx.send("There is no filter called {}".format(tag))
+            await ctx.send("There is no filter called {}".format(filter))
         else:
             await ctx.send("There are no filters setup on this server!")
 
@@ -75,15 +75,15 @@ class Filters:
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
     async def add_filter(self, ctx):
-        """Use this to add a new tag that can be used in this server
+        """Use this to add a new filter that can be used in this server
 
-        EXAMPLE: !tag add
+        EXAMPLE: !filter add
         RESULT: A follow-along in order to create a new tag"""
 
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        my_msg = await ctx.send("Ready to setup a new filter! What do you want the trigger for the filter to be?")
+        my_msg = await ctx.send("Ready to setup a new filter! What do you want the name of for the filter to be?")
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=60)
@@ -91,22 +91,22 @@ class Filters:
             await ctx.send("You took too long!")
             return
 
-        trigger = msg.content.lower().strip()
+        filter = msg.content.lower().strip()
         forbidden_tags = ['add', 'create', 'setup', 'edit', '']
-        if len(trigger) > 100:
-            await ctx.send("Please keep tag triggers under 100 characters")
+        if len(filter) > 100:
+            await ctx.send("Please keep filter names under 100 characters")
             return
-        elif trigger in forbidden_tags:
+        elif filter in forbidden_tags:
             await ctx.send(
-                "Sorry, but your tag trigger was detected to be forbidden. "
-                "Current forbidden tag triggers are: \n{}".format("\n".join(forbidden_tags)))
+                "Sorry, but your filter name was detected to be forbidden. "
+                "Current forbidden tag filters are: \n{}".format("\n".join(forbidden_tags)))
             return
 
-        tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags') or []
-        if tags:
-            for t in tags:
-                if t['trigger'].lower().strip() == trigger:
-                    await ctx.send("There is already a tag setup called {}!".format(trigger))
+        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
+        if filters:
+            for t in filters:
+                if t['filter'].lower().strip() == filter:
+                    await ctx.send("There is already a filter setup called {}!".format(filter))
                     return
 
         try:
@@ -115,13 +115,13 @@ class Filters:
         except (discord.Forbidden, discord.HTTPException):
             pass
 
-        if trigger.lower() in ['edit', 'delete', 'remove', 'stop']:
-            await ctx.send("You can't create a tag with {}!".format(trigger))
+        if filter.lower() in ['edit', 'delete', 'remove', 'stop']:
+            await ctx.send("You can't create a filter with {}!".format(filter))
             return
 
         my_msg = await ctx.send(
-            "Alright, your new tag can be called with {}!\n\nWhat do you want to be displayed with this tag?".format(
-                trigger))
+            "Alright, your new filter can be called with {}!\n\nWhat do you want to be displayed with this filter?\n\n Please use a comma in between tags.".format(
+                filter))
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=60)
@@ -137,18 +137,18 @@ class Filters:
             pass
 
         # The different DB settings
-        tag = {
+            filter = {
             'author': str(ctx.message.author.id),
-            'trigger': trigger,
+            'filter': filter,
             'result': result
         }
-        tags.append(tag)
+        filters.append(filter)
         entry = {
             'server_id': str(ctx.message.guild.id),
-            'tags': tags
+            'filters': filters
         }
         self.bot.db.save('tags', entry)
-        await ctx.send("I have just setup a new tag for this server! You can call your tag with {}".format(trigger))
+        await ctx.send("I have just setup a new filter for this server! You can view your filter with {}".format(filter))
 
     @filter.command(name='edit')
     @commands.guild_only()
@@ -165,7 +165,7 @@ class Filters:
 
         if tags:
             for i, t in enumerate(tags):
-                if t['trigger'] == tag:
+                if t['filter'] == tag:
                     if t['author'] == str(ctx.message.author.id):
                         my_msg = await ctx.send(
                             "Alright, what do you want the new result for the tag {} to be".format(tag))
@@ -209,7 +209,7 @@ class Filters:
         tags = self.bot.db.load('tags', key=ctx.message.guild.id, pluck='tags')
         if tags:
             for t in tags:
-                if t['trigger'].lower().strip() == tag:
+                if t['filter'].lower().strip() == tag:
                     if ctx.message.author.permissions_in(ctx.message.channel).manage_guild or str(
                             ctx.message.author.id) == t['author']:
                         tags.remove(t)
