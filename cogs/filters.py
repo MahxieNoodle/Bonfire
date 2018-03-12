@@ -148,10 +148,6 @@ class Filters:
         else:
             await ctx.send("There are no filters setup on this server!")
 
-
-
-
-
     @filter.command(name='add', aliases=['create', 'setup'])
     @commands.guild_only()
     @utils.custom_perms(send_messages=True)
@@ -165,12 +161,12 @@ class Filters:
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        if len(options) != 2:
+        if len(options) < 2:
             await ctx.send("You need to provide 2-3 options! Such as \n `add derpi 49372` \n or \n `remove e621`")
             return
         else:
             # Get the three arguments from this list, then make sure the 2nd is either from or to
-            if len(options) > 2:
+            if len(options) < 2:
                 arg3 = 0
                 return
             else:
