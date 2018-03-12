@@ -132,7 +132,7 @@ class Filters:
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
         if filters:
             for t in filters:
-                if t['filterName'].lower().strip() == filter:
+                if t['trigger'].lower().strip() == filter:
                     if ctx.message.author.permissions_in(ctx.message.channel).manage_guild or str(
                             ctx.message.author.id) == t['author']:
                         filters.remove(t)
@@ -183,8 +183,11 @@ class Filters:
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
         if filters:
             for t in filters:
-                if not t['filterName'].lower().strip() == filterName:
+                if t['filterName'].lower().strip() == filterName:
                     await ctx.send("There is already a filter setup called {}!".format(filterName))
+
+                    
+
                     return
 
         # The different DB settings
