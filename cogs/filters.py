@@ -84,7 +84,7 @@ class Filters:
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        if len(options) >= 2:
+        if len(options) < 2:
             await ctx.send("You need to provide 2-3 options! Such as \n `add derpi 49372` \n or \n `remove e621`")
             return
         else:
