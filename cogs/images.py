@@ -241,7 +241,13 @@ class Images:
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
         #Blacklist of tags to block. Because e621 has the worst tagging system we need to supply the list locally.
-        blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl','hyper','hyper_dick','hyper_boobs','hyper_breasts','watersports']
+        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
+        if filters:
+            for t in filters:
+                if t['filterName'].lower().strip() == filter:
+                    blacklist = t['result']
+
+        # blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl','hyper','hyper_dick','hyper_boobs','hyper_breasts','watersports']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 5,
