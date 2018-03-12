@@ -175,15 +175,10 @@ class Images:
             # If this is a nsfw channel, we just need to tack on 'explicit' to the terms
             # Also use the custom filter that I have setup, that blocks some certain tags
             # If the channel is not nsfw, we don't need to do anything, as the default filter blocks explicit
-            filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
-            if filters:
-                for t in filters:
-                    if t['filterName'].lower().strip() == filter:
-                        filter_id = t['result']
 
             if nsfw:
                 params['q'] += ", (explicit OR suggestive)"
-                params['filter_id'] = filter_id
+                params['filter_id'] = 95938
             else:
                 params['q'] += ", safe"
             # Lets filter out some of the "crap" that's on derpibooru by requiring an image with a score higher than 15
