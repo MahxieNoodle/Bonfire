@@ -177,13 +177,13 @@ class Filters:
         await ctx.send("Adding a filter for {} contents: {} ".format(arg1, arg2))
 
         filterName = arg1.lower().strip()
+        filterName = "e621"
         filterString = arg2.strip()
 
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
         if filters:
             for t in filters:
                 if t['filterName'].lower().strip() == filterName:
-                    # we need to edit the filter as it exists
                     await ctx.send("There is already a filter setup called {}!".format(filterName))
                     return
 
