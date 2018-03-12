@@ -162,28 +162,22 @@ class Filters:
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
         if len(options) < 2:
-            await ctx.send("You need to provide 2-3 options! Such as \n `add derpi 49372` \n or \n `remove e621`")
+            await ctx.send("You need to provide 2 options! Such as \n `add derpi 49372` \n or \n `add e621 tags`")
             return
         else:
             # Get the three arguments from this list, then make sure the 2nd is either from or to
-            if len(options) < 2:
-                arg1, arg2= options
-            else:
-                arg1, arg2, arg3 = options
+                arg1, arg2 = options
 
-        if arg2.lower() not in ['derpi', 'e621']:
+        if arg1.lower() not in ['derpi', 'e621']:
             await ctx.send("The 2nd option needs to be either \"derpi\" or \"e621\". Such as: `add derpi 49372` "
                            "or `add e621 tag,tag_name,tag`")
             return
-        elif arg1.lower() not in ['add', 'remove']:
-            await ctx.send("The 2nd option needs to be either \"add\" or \"delete\". Such as: `add derpi 49372` "
-                           "or `remove e621`")
-            return
 
-        await ctx.send("I have just restricted {} {} {}".format(arg1, arg2, arg3))
 
-        filterName = arg2.content.lower().strip()
-        filterString = arg3.strip()
+        await ctx.send("Adding a filter for {} contents: {} ".format(arg1, arg2))
+
+        filterName = arg1.content.lower().strip()
+        filterString = arg2.strip()
 
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
         if filters:
