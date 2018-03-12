@@ -50,7 +50,7 @@ class Filters:
         else:
             await ctx.send("There are no filters setup on this server!")
 
- 
+
     @commands.command()
     @commands.guild_only()
     @utils.custom_perms(manage_guild=True)
@@ -68,7 +68,7 @@ class Filters:
         RESULT: This user can no longer use the boop command
         """
         # First make sure we're given three options
-        if len(options) >= 2:
+        if len(options) < 2:
             await ctx.send("You need to provide 2-3 options! Such as \n `add derpi 49372` \n or \n `remove e621`")
             return
         else:
