@@ -132,7 +132,7 @@ class Filters:
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
         if filters:
             for t in filters:
-                if t['trigger'].lower().strip() == filter:
+                if t['filterName'].lower().strip() == filter:
                     if ctx.message.author.permissions_in(ctx.message.channel).manage_guild or str(
                             ctx.message.author.id) == t['author']:
                         filters.remove(t)
