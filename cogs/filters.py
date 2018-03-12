@@ -176,7 +176,7 @@ class Filters:
 
         await ctx.send("Adding a filter for {} contents: {} ".format(arg1, arg2))
 
-        filterName = arg1.content.lower().strip()
+        filterName = arg1.lower().strip()
         filterString = arg2.strip()
 
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
