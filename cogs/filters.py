@@ -152,7 +152,7 @@ class Filters:
     @commands.guild_only()
     @utils.custom_perms(send_messages=True)
     @utils.check_restricted()
-    async def add_filter(self, ctx, *options):
+    async def add_filter(self, ctx, type, tags: str):
         """Use this to add a new filter that can be used in this server
 
         EXAMPLE: !filter add
@@ -161,14 +161,15 @@ class Filters:
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        if len(options) < 2:
-            await ctx.send("You need to provide 2 options! Such as \n `add derpi 49372` \n or \n `add e621 tags`")
+        if tags:
+            await ctx.send("You need to provide the tags to block! Such as \n `add derpi 49372` \n or \n `add e621 tag_name,tag_name`")
             return
         else:
-            # Get the three arguments from this list, then make sure the 2nd is either from or to
-                arg1, arg2 = options
+            tags = tags.replace(' ', '_')
+            tags = tags.replace(',_', ' ')
 
-        if arg1.lower() not in ['derpi', 'e621']:
+
+        if type.lower() not in ['derpi', 'e621']:
             await ctx.send("The 2nd option needs to be either \"derpi\" or \"e621\". Such as: `add derpi 49372` "
                            "or `add e621 tag,tag_name,tag`")
             return
@@ -176,9 +177,9 @@ class Filters:
 
         await ctx.send("Adding a filter for {} contents: {} ".format(arg1, arg2))
 
-        filterName = arg1.lower().strip()
-        filterName = "e621"
-        filterString = arg2.strip()
+        filterName = type.lower().strip()
+        #filterName = "e621"
+        filterString = tags
 
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
         if filters:
