@@ -183,7 +183,7 @@ class Filters:
         filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters') or []
         if filters:
             for t in filters:
-                if t['filterName'].lower().strip() == filterName:
+                if not t['filterName'].lower().strip() == filterName:
                     await ctx.send("There is already a filter setup called {}!".format(filterName))
                     return
 
