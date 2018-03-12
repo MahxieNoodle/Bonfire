@@ -175,7 +175,7 @@ class Filters:
             return
 
 
-        await ctx.send("Adding a filter for {} contents: {} ".format(arg1, arg2))
+        await ctx.send("Adding a filter for {} contents: {} ".format(type, tags))
 
         filterName = type.lower().strip()
         #filterName = "e621"
