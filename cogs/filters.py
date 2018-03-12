@@ -186,9 +186,6 @@ class Filters:
                     # we need to edit the filter as it exists
                     await ctx.send("There is already a filter setup called {}!".format(filterName))
                     return
-                else:
-                #uhh
-                    return
 
         # The different DB settings
         filter = {
