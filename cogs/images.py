@@ -181,7 +181,8 @@ class Images:
                 for t in filters:
                     if t['filterName'].lower().strip() == "derpi":
                         filter_id = t['result']
-                        print(filter_id)
+            else:
+                filter_id = 95938
 
             if nsfw:
                 params['q'] += ", (explicit OR suggestive)"
