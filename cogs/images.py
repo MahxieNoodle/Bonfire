@@ -176,9 +176,16 @@ class Images:
             # Also use the custom filter that I have setup, that blocks some certain tags
             # If the channel is not nsfw, we don't need to do anything, as the default filter blocks explicit
 
+            filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
+            if filters:
+                for t in filters:
+                    if t['filterName'].lower().strip() == "derpi":
+                        filter_id = t['result']
+                        print(filter_id)
+
             if nsfw:
                 params['q'] += ", (explicit OR suggestive)"
-                params['filter_id'] = 95938
+                params['filter_id'] = filter_id
             else:
                 params['q'] += ", safe"
             # Lets filter out some of the "crap" that's on derpibooru by requiring an image with a score higher than 15
@@ -242,11 +249,7 @@ class Images:
         tags = tags.replace(' ', '_')
         tags = tags.replace(',_', ' ')
         #Blacklist of tags to block. Because e621 has the worst tagging system we need to supply the list locally.
-        filters = self.bot.db.load('filters', key=ctx.message.guild.id, pluck='filters')
-        if filters:
-            for t in filters:
-                if t['filterName'].lower().strip() == filter:
-                    blacklist = t['result']
+
 
         # blacklist = ['young', 'rape', 'forced', 'diaper', 'scat','dickgirl','hyper','hyper_dick','hyper_boobs','hyper_breasts','watersports']
 
