@@ -35,15 +35,6 @@ async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
     await bot.process_commands(message)
-    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, message)
-    if matches:
-        reacted = message.add_reaction("👌")
-        await message.send("filter0")
-        #await reacted.update_message(message)
-    else:
-        await message.send("filter")
-
 
 
 @bot.event
@@ -79,6 +70,14 @@ async def process_command(ctx):
 
     # Save all the changes
     bot.db.save('command_usage', command_usage)
+    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    matches = re.search(regex, ctx.message)
+    if matches:
+        reacted = ctx.message.add_reaction("👌")
+        await ctx.message.send("filter0")
+        #await reacted.update_message(message)
+    else:
+        await ctx.message.send("filter")
 
 
 
