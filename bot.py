@@ -44,13 +44,13 @@ async def on_command_completion(ctx):
 
 
 async def react_photo(ctx):
-    command = ctx.command
+    message = ctx
     regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, command)
+    matches = re.search(regex, message)
     if matches:
         print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
-        reacted = command.add_reaction("👌")
-        await reacted.update_message(command)
+        reacted = message.add_reaction("👌")
+        await reacted.update_message(message)
     else:
         return
 
