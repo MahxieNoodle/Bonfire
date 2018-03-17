@@ -34,7 +34,7 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    react_photo(message)
+    message.send(react_photo(message))
     await bot.process_commands(message)
 
 @bot.event
