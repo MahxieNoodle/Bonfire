@@ -34,21 +34,25 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, message.command)
-    if matches:
-        print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
-        reacted = message.command.add_reaction("👌")
-        await bot.process_commands(message)
-        await reacted.update_message(message)
-    else:
-        await bot.process_commands(message)
+    react_photo(message)
+    await bot.process_commands(message)
 
 @bot.event
 async def on_command_completion(ctx):
     # There's no reason to continue waiting for this to complete, so lets immediately launch this in a new future
     bot.loop.create_task(process_command(ctx))
 
+
+async def react_photo(ctx):
+    command = ctx.command
+    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    matches = re.search(regex, command)
+    if matches:
+        print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
+        reacted = command.add_reaction("👌")
+        await reacted.update_message(command)
+    else:
+        return
 
 async def process_command(ctx):
     author = ctx.message.author
