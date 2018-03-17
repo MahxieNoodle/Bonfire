@@ -39,8 +39,10 @@ async def on_message(message):
     if matches:
         print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
         reacted = message.command.add_reaction("👌")
-        await reacted.update_message()
-    await bot.process_commands(message)
+        await bot.process_commands(message)
+        await reacted.update_message(message)
+    else:
+        await bot.process_commands(message)
 
 @bot.event
 async def on_command_completion(ctx):
