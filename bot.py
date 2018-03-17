@@ -34,7 +34,6 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    await react_photo(message)
     await bot.process_commands(message)
 
 @bot.event
@@ -82,6 +81,7 @@ async def process_command(ctx):
 
     # Save all the changes
     bot.db.save('command_usage', command_usage)
+    await react_photo(ctx.message)
 
 
 
