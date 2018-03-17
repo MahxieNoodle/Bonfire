@@ -50,9 +50,10 @@ async def react_photo(ctx):
     if matches:
         print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
         reacted = message.add_reaction("👌")
+        await ctx.send("filter0")
         await reacted.update_message(message)
     else:
-        ctx.send("filter")
+        await ctx.send("filter")
 
 async def process_command(ctx):
     author = ctx.message.author
