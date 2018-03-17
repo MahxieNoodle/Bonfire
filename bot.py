@@ -6,6 +6,7 @@ import datetime
 import pendulum
 import os
 import aiohttp
+import re
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -34,6 +35,19 @@ async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
     await bot.process_commands(message)
+
+
+@bot.event
+async def on_message(message):
+    if message.author.bot or utils.should_ignore(bot, message):
+        return
+    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    matches = re.search(regex, message.command)
+
+    if matches:
+        print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
+        reacted = message.command.add_reaction("👌")
+        await reacted.update_message()
 
 
 @bot.event
@@ -69,6 +83,7 @@ async def process_command(ctx):
 
     # Save all the changes
     bot.db.save('command_usage', command_usage)
+
 
 
 @bot.event

@@ -169,7 +169,7 @@ class Filters:
         else:
             tags = tags.replace(' ', '_')
             tags = tags.replace(',_', ' ')
-           
+
 
 
         if type.lower() not in ['derpi', 'e621']:
