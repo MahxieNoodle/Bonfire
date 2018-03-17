@@ -34,8 +34,7 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    await message.send("fuck you")
-    react_photo(message)
+    await react_photo(message)
     await bot.process_commands(message)
 
 @bot.event
@@ -53,7 +52,7 @@ async def react_photo(ctx):
         reacted = message.add_reaction("👌")
         await reacted.update_message(message)
     else:
-        return
+        ctx.send("filter")
 
 async def process_command(ctx):
     author = ctx.message.author
