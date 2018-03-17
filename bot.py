@@ -71,7 +71,7 @@ async def process_command(ctx):
     # Save all the changes
     bot.db.save('command_usage', command_usage)
     regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, ctx.message)
+    matches = re.search(regex, command)
     if matches:
         reacted = ctx.message.add_reaction("👌")
         await ctx.message.send("filter0")
