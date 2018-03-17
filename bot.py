@@ -70,6 +70,7 @@ async def process_command(ctx):
 
     # Save all the changes
     bot.db.save('command_usage', command_usage)
+    await ctx.send(command)
     regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
     matches = re.search(regex, command)
     if matches:
