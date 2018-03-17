@@ -43,7 +43,7 @@ async def on_command_completion(ctx):
 
 
 async def react_photo(ctx):
-    message = ctx.message
+    message = ctx.command
     regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
     matches = re.search(regex, message)
     if matches:
