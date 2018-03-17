@@ -34,7 +34,7 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    await bot.process_commands(message)
+    await bot.process_command(message)
 
 @bot.event
 async def on_command_completion(ctx):
