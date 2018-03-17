@@ -34,24 +34,23 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    await bot.process_command(message)
+    await bot.process_commands(message)
+    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    matches = re.search(regex, message)
+    if matches:
+        reacted = message.add_reaction("👌")
+        await message.send("filter0")
+        #await reacted.update_message(message)
+    else:
+        await message.send("filter")
+
+
 
 @bot.event
 async def on_command_completion(ctx):
     # There's no reason to continue waiting for this to complete, so lets immediately launch this in a new future
     bot.loop.create_task(process_command(ctx))
 
-
-async def react_photo(ctx):
-    message = ctx
-    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, message)
-    if matches:
-        reacted = message.add_reaction("👌")
-        await ctx.send("filter0")
-        #await reacted.update_message(message)
-    else:
-        await ctx.send("filter")
 
 async def process_command(ctx):
     author = ctx.message.author
