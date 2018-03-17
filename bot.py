@@ -79,7 +79,6 @@ async def process_command(ctx):
 
     # Save all the changes
     bot.db.save('command_usage', command_usage)
-    await react_photo(ctx.message)
 
 
 
