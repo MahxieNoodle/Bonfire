@@ -37,19 +37,6 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-async def on_message(message):
-    command = message.command
-    await message.send(command)
-    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, command)
-    if matches:
-        reacted = message.add_reaction("👌")
-        await message.send("filter0")
-        #await reacted.update_message(message)
-    else:
-        await message.send("filter")
-
-
 @bot.event
 async def on_command_completion(ctx):
     # There's no reason to continue waiting for this to complete, so lets immediately launch this in a new future
