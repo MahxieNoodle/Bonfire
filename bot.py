@@ -44,7 +44,14 @@ async def on_command_completion(ctx):
 
 async def react_photo(ctx):
     message = ctx
-
+    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    matches = re.search(regex, message)
+    if matches:
+        reacted = message.add_reaction("👌")
+        await ctx.send("filter0")
+        #await reacted.update_message(message)
+    else:
+        await ctx.send("filter")
 
 async def process_command(ctx):
     author = ctx.message.author
