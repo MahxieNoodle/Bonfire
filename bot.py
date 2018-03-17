@@ -34,12 +34,6 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or utils.should_ignore(bot, message):
         return
-    regex = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
-    matches = re.search(regex, message.command)
-    if matches:
-        print("Match was found at {start}-{end}: {match}".format(start=matches.start(), end=matches.end(),match=matches.group()))
-        reacted = message.command.add_reaction("👌")
-        await reacted.update_message()
     await bot.process_commands(message)
 
 @bot.event
