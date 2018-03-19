@@ -256,7 +256,7 @@ class Images:
                 if t['filterName'].lower().strip() == "e621":
                     blacklist = t['result']
         else:
-            blacklist = ['noblacklist']
+            blacklist = ['null']
 
         url = 'https://e621.net/post/index.json'
         params = {'limit': 5,
@@ -282,7 +282,7 @@ class Images:
         # Get get the tags from the image and compare them against the blacklist. If they match we will retry.
         try:
             retry = 0
-            while (retry < 4):
+            while (retry < 6):
                 rand_image_number = 1
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_tags = data[rand_image_number]['tags']
@@ -290,7 +290,7 @@ class Images:
                     await ctx.send(rand_image)
                     break
                 else:
-                    if retry < 3:
+                    if retry < 5:
                         retry += 1
                     else:
                         await ctx.send("Sorry, all results used one or more blacklisted tag. {}".format(ctx.message.author.mention))
