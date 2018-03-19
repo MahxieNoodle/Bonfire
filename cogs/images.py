@@ -255,6 +255,7 @@ class Images:
             for t in filters:
                 if t['filterName'].lower().strip() == "e621":
                     blacklist = t['result'].replace(" ", "")
+                    blacklist.replace(",", " ")
         else:
             blacklist = ['null']
 
