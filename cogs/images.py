@@ -294,7 +294,7 @@ class Images:
                     if retry < 5:
                         retry += 1
                     else:
-                        await ctx.send("Sorry, all results used one or more blacklisted tag.{} {}".format(ctx.message.author.mention, blacklist.split(" ")) )
+                        await ctx.send("Sorry, all results used one or more blacklisted tag.{}".format(ctx.message.author.mention) )
                         break
         except (ValueError, KeyError):
             await ctx.send("No results with that tag {}".format(ctx.message.author.mention))
