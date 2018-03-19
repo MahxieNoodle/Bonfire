@@ -286,7 +286,7 @@ class Images:
                 rand_image_number = 1
                 rand_image = data[rand_image_number]['file_url']
                 rand_image_tags = data[rand_image_number]['tags']
-                if not [i for e in blacklist for i in rand_image_tags.split(" ") if e in i]:
+                if not [i for e in blacklist for i in rand_image_tags.split(",") if e in i]:
                     await ctx.send(rand_image)
                     break
                 else:
