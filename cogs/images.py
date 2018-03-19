@@ -258,7 +258,6 @@ class Images:
         else:
             blacklist = ['null']
 
-        blacklist = "pony"
         url = 'https://e621.net/post/index.json'
         params = {'limit': 5,
                   'tags': tags + ' order:random'}
