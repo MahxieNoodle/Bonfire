@@ -167,7 +167,7 @@ class Filters:
             await ctx.send("You need to provide the tags(e621) or filter id (derpi) to block! Such as \n `add derpi 49372` \n or \n `add e621 tag_name,tag_name`")
             return
         else:
-            tags = tags.replace(' ', '_')
+            
             tags = tags.replace(" ", "")
             tags = tags.replace(',_', ' ')
 
