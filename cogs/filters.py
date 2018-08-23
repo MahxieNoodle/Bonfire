@@ -161,13 +161,13 @@ class Filters:
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author and len(m.content) > 0
 
-        tags = ' '.join(value for value in tags)
+        tags = ''.join(value for value in tags)
 
         if not tags:
             await ctx.send("You need to provide the tags(e621) or filter id (derpi) to block! Such as \n `add derpi 49372` \n or \n `add e621 tag_name,tag_name`")
             return
         else:
-            
+            tags = tags.replace(' ', '_')
             tags = tags.replace(',_', ' ')
 
 
